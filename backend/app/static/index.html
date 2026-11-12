@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CheckStock</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>CheckStock</h1>
+    </div>
+    <button id="refreshBtn" type="button">Обновить</button>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="stock" type="button">Остатки</button>
+    <button class="tab" data-tab="warehouses" type="button">Склады</button>
+    <button class="tab" data-tab="movements" type="button">Движения</button>
+    <button class="tab" data-tab="fbs" type="button">FBS</button>
+    <button class="tab" data-tab="fbo" type="button">FBO</button>
+    <button class="tab" data-tab="history" type="button">История</button>
+  </nav>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+
+  <main>
+    <section id="tab-stock" class="panel active">
+      <h2>Остатки по артикулам и ФФ</h2>
+      <div class="table-wrap">
+        <table id="stockTable">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="grid-3">
+        <div>
+          <h3>В пути между ФФ</h3>
+          <div id="transitTransfers" class="list"></div>
+        </div>
+        <div>
+          <h3>В пути на маркетплейс (FBO)</h3>
+          <div id="transitFbo" class="list"></div>
+        </div>
+        <div>
+          <h3>К клиенту (FBS)</h3>
+          <div id="transitFbs" class="list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-warehouses" class="panel">
+      <h2>Склады фулфилмента</h2>
+      <form id="whCreateForm" class="row-form">
+        <input name="name" placeholder="Название ФФ" required />
+        <button type="submit">Добавить</button>
+      </form>
+      <div id="warehouseList" class="list"></div>
+    </section>
+
+    <section id="tab-movements" class="panel">
+      <h2>Приход и перемещения</h2>
+      <div class="grid-2">
+        <form id="receiptForm" class="card-form">
+          <h3>Приход</h3>
+          <label>Товар<select name="product_id" required></select></label>
+          <label>Склад<select name="warehouse_id" required></select></label>
+          <label>Кол-во<input name="quantity" type="number" min="1" value="1" required /></label>
+          <button type="submit">Оформить приход</button>
+        </form>
+
+        <form id="transferShipForm" class="card-form">
+          <h3>Отправка перемещения</h3>
+          <label>Товар<select name="product_id" required></select></label>
+          <label>Откуда<select name="from_warehouse_id" required></select></label>
+          <label>Куда<select name="to_warehouse_id" required></select></label>
+          <label>Кол-во<input name="quantity" type="number" min="1" value="1" required /></label>
+          <button type="submit">Отправить</button>
+        </form>
+      </div>
+
+      <h3>Открытые перемещения</h3>
+      <div id="openTransfers" class="list"></div>
+    </section>
+
+    <section id="tab-fbs" class="panel">
+      <h2>FBS: резерв и отправка клиенту</h2>
+      <form id="fbsReserveForm" class="card-form narrow">
+        <h3>Резерв</h3>
+        <label>Товар<select name="product_id" required></select></label>
+        <label>Склад<select name="warehouse_id" required></select></label>
+        <label>Кол-во<input name="quantity" type="number" min="1" value="1" required /></label>
+        <button type="submit">Зарезервировать</button>
+      </form>
+      <h3>Заказы FBS</h3>
+      <div id="fbsOrders" class="list"></div>
+    </section>
+
+    <section id="tab-fbo" class="panel">
+      <h2>FBO: на склад маркетплейса</h2>
+      <form id="fboShipForm" class="card-form narrow">
+        <h3>Отправка</h3>
+        <label>Товар<select name="product_id" required></select></label>
+        <label>Склад<select name="warehouse_id" required></select></label>
+        <label>Кол-во<input name="quantity" type="number" min="1" value="1" required /></label>
+        <button type="submit">Отправить FBO</button>
+      </form>
+      <h3>В пути / приёмка</h3>
+      <div id="fboShipments" class="list"></div>
+    </section>
+
+    <section id="tab-history" class="panel">
+      <h2>История операций</h2>
+      <div class="table-wrap">
+        <table id="historyTable">
+          <thead>
+            <tr>
+              <th>Время</th>
+              <th>Тип</th>
+              <th>Товар</th>
+              <th>Кол-во</th>
+              <th>Откуда</th>
+              <th>Куда</th>
+              <th>Комментарий</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
