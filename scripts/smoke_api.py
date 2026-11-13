@@ -2,7 +2,7 @@
 
 Запуск:
   python scripts/smoke_api.py
-  python scripts/smoke_api.py http://localhost:8000
+  python scripts/smoke_api.py http://localhost:8001
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ def req(base: str, method: str, path: str, body: dict | None = None):
 
 
 def main() -> int:
-    base = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://localhost:8000"
+    base = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://localhost:8001"
     print(f"Smoke against {base}")
 
     code, health = req(base, "GET", "/api/health")

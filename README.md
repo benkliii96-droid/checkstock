@@ -16,9 +16,9 @@
 docker compose up --build
 ```
 
-Открыть: [http://localhost:8000](http://localhost:8000)
+Открыть: [http://localhost:8001](http://localhost:8001)
 
-API-документация: [http://localhost:8000/docs](http://localhost:8000/docs)
+API-документация: [http://localhost:8001/docs](http://localhost:8001/docs)
 
 Остановка:
 
@@ -193,12 +193,12 @@ python scripts/smoke_api.py
 
 ```bash
 # подставьте реальные UUID из /api/stock или /docs
-curl -s -X POST http://localhost:8000/api/movements/receipt \
+curl -s -X POST http://localhost:8001/api/movements/receipt \
   -H "Content-Type: application/json" \
   -d "{\"idempotency_key\":\"demo-receipt-1\",\"product_id\":\"...\",\"warehouse_id\":\"...\",\"quantity\":1}"
 
 # второй раз с тем же ключом — replayed: true, остаток +1 только один раз
-curl -s -X POST http://localhost:8000/api/movements/receipt \
+curl -s -X POST http://localhost:8001/api/movements/receipt \
   -H "Content-Type: application/json" \
   -d "{\"idempotency_key\":\"demo-receipt-1\",\"product_id\":\"...\",\"warehouse_id\":\"...\",\"quantity\":1}"
 ```
